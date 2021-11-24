@@ -1,6 +1,7 @@
 package com.zendesk.zendesk_ticket_viewer_rest.controller;
 
 import com.zendesk.zendesk_ticket_viewer_rest.ZendeskTicketViewerRestApplication;
+import com.zendesk.zendesk_ticket_viewer_rest.service.ZendeskRestClient;
 import com.zendesk.zendesk_ticket_viewer_rest.view.Tickets;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,13 +19,17 @@ import java.util.List;
 public class ZendeskController {
     private static final Logger logger = LoggerFactory.getLogger(ZendeskController.class);
 
+    private ZendeskRestClient zendeskRestClient;
+
+    public ZendeskController() {
+        zendeskRestClient = new ZendeskRestClient();
+
+    }
 
     @RequestMapping(value = "/api/v1/tickets", method = RequestMethod.GET)
     public ResponseEntity<List<Tickets>> listAllTickets() {
         logger.info("GET Request made to API: /api/v1/tickets");
-
-
-
+        zendeskRestClient.getAllTickets();
         return new ResponseEntity<>(new ArrayList<Tickets>(), HttpStatus.OK);
     }
 }
