@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/Zendesk_Ticketing_System.iml" filepath="$PROJECT_DIR$/.idea/Zendesk_Ticketing_System.iml" />
+      <module fileurl="file://$PROJECT_DIR$/zendesk_ticket_viewer_rest/zendesk_ticket_viewer_rest/zendesk_ticket_viewer_rest.iml" filepath="$PROJECT_DIR$/zendesk_ticket_viewer_rest/zendesk_ticket_viewer_rest/zendesk_ticket_viewer_rest.iml" />
+    </modules>
+  </component>
+</project>
