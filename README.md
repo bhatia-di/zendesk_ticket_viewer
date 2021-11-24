@@ -2,7 +2,9 @@ Zendesk Ticket Viewer
 
 Steps to start the application on your local machine
 1. port: 8080
-2. 
+2. JDK: 17
+3. Node & npm
+4. 
 
 
 Steps performed to understand & implement the requirements
