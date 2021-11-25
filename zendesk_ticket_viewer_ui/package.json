@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "webpack-cli serve --mode=development --env development --open --hot",
+    "start": "webpack serve --mode=development --open --hot",
     "build": "webpack --mode=production --env production --progress",
     "lint": "eslint src/**/*.{ts,tsx} --quiet --fix"
   },
@@ -21,6 +21,12 @@
     "ts-loader": "^9.2.6"
   },
   "devDependencies": {
+    "@babel/core": "^7.16.0",
+    "@babel/plugin-transform-runtime": "^7.16.4",
+    "@babel/preset-env": "^7.16.4",
+    "@babel/preset-react": "^7.16.0",
+    "@babel/preset-typescript": "^7.16.0",
+    "@babel/runtime": "^7.16.3",
     "@types/node": "^16.11.10",
     "@types/react": "^17.0.36",
     "@types/react-dom": "^17.0.11",
