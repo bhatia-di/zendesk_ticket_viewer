@@ -21,20 +21,18 @@ return (
         navbar
       >
         <NavItem>
-          <NavLink href="/tickets/">
+          <NavLink href="/tickets">
             Tickets
           </NavLink>
         </NavItem>
         <NavItem>
-          <NavLink href="">
+          <NavLink href="/about">
             About
           </NavLink>
         </NavItem>
 
       </Nav>
-      <NavbarText>
-        Simple Text
-      </NavbarText>
+
     </Collapse>
   </Navbar>
 </div>
