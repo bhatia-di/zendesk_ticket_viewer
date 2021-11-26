@@ -3,7 +3,6 @@ package com.zendesk.zendesk_ticket_viewer_rest.controller;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.zendesk.zendesk_ticket_viewer_rest.service.ZendeskRestClient;
 import com.zendesk.zendesk_ticket_viewer_rest.view.Ticket;
-import com.zendesk.zendesk_ticket_viewer_rest.view.TicketList;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -27,10 +26,8 @@ public class ZendeskController {
     }
 
     @RequestMapping(value = "/api/v1/tickets", method = RequestMethod.GET)
-    public void listAllTickets() throws JsonProcessingException {
+    public ResponseEntity listAllTickets() throws JsonProcessingException {
         logger.info("GET Request made to API: /api/v1/tickets");
-        zendeskRestClient.getAllTickets();
-
-
+        return zendeskRestClient.getAllTickets();
     }
 }

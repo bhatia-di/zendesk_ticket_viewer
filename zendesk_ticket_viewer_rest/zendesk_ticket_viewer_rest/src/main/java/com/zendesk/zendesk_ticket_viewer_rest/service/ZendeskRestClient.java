@@ -49,7 +49,7 @@ public class ZendeskRestClient {
         }};
     }
 
-    public void getAllTickets() throws JsonProcessingException {
+    public ResponseEntity getAllTickets() throws JsonProcessingException {
 
         logger.info("----- Making an Zendesk API call------");
 
@@ -61,14 +61,15 @@ public class ZendeskRestClient {
 
                 ZendeskAPIResponse response = objectMapper.readValue(responseEntity.getBody(), ZendeskAPIResponse.class);
 
+                return new ResponseEntity(response, HttpStatus.OK);
             } else {
 
-
+                return new ResponseEntity("Could not make connection with the Zendesk API", HttpStatus.BAD_REQUEST);
             }
 
 
         } catch (Exception e) {
-
+                return  new ResponseEntity("Could not parse the response ", HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
 
