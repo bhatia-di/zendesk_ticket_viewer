@@ -27,9 +27,13 @@ module.exports = {
         },
       },
       {
-        test: /\.css$/,
+        test: /\.(sass|less|css)$/,
         include: path.resolve(__dirname, "src"),
-        use: ["style-loader", "css-loader"],
+        use: ["style-loader", "css-loader", "less-loader"],
+      },
+      {
+        test: /\.(jpe?g|png|gif|svg)$/i,
+        loader:'file-loader'
       },
     ],
   },
