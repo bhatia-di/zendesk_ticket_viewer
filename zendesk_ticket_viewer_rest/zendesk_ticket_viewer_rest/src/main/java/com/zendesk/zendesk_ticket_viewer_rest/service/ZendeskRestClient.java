@@ -49,13 +49,13 @@ public class ZendeskRestClient {
         }};
     }
 
-    public ResponseEntity getAllTickets() throws JsonProcessingException {
+    public ResponseEntity getAllTickets() {
 
         logger.info("----- Making an Zendesk API call------");
 
         try {
             ResponseEntity<String> responseEntity = restTemplate.exchange
-                    (REST_SERVICE_URL, HttpMethod.GET, new HttpEntity<Object>(createHeaders(username, password)), String.class);
+                    (REST_SERVICE_URL, HttpMethod.GET, new HttpEntity<String>(createHeaders(username, password)), String.class);
 
             if (responseEntity.getStatusCodeValue() == 200) {
 
@@ -68,8 +68,11 @@ public class ZendeskRestClient {
             }
 
 
+        } catch (JsonProcessingException e) {
+            return  new ResponseEntity("Could not parse the response ", HttpStatus.INTERNAL_SERVER_ERROR);
+
         } catch (Exception e) {
-                return  new ResponseEntity("Could not parse the response ", HttpStatus.INTERNAL_SERVER_ERROR);
+                return  new ResponseEntity("Request failed with an error ", HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
 
