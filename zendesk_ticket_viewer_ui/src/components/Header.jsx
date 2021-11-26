@@ -21,12 +21,12 @@ return (
         navbar
       >
         <NavItem>
-          <NavLink href="/tickets">
+          <NavLink href="/tickets" active>
             Tickets
           </NavLink>
         </NavItem>
         <NavItem>
-          <NavLink href="/about">
+          <NavLink href="/about" active>
             About
           </NavLink>
         </NavItem>

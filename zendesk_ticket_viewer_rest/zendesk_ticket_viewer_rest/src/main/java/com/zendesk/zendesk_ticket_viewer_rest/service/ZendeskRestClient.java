@@ -17,8 +17,8 @@ public class ZendeskRestClient {
     private static final Logger logger = LoggerFactory.getLogger(ZendeskRestClient.class);
 
     public static final String REST_SERVICE_URL = "https://zcczendeskcodingchallenge3911.zendesk.com/api/v2/tickets.json?page[size]=8";
-    public static final String username = "";
-    public static final String password = "";
+    public static final String username = "bhatia.di@northeastern.edu";
+    public static final String password = "ZendeskCodingChallenge";
 
     HttpHeaders createHeaders(String username, String password) {
         return new HttpHeaders() {{
@@ -30,13 +30,15 @@ public class ZendeskRestClient {
         }};
     }
 
-    public void getAllTickets() {
+    public ResponseEntity<Object> getAllTickets() {
 
         RestTemplate restTemplate = new RestTemplate();
         logger.info("----- Making an Zendesk API call------");
         ResponseEntity<Object> responseEntity = restTemplate.exchange
                 (REST_SERVICE_URL, HttpMethod.GET, new HttpEntity<Object>(createHeaders(username, password)), Object.class);
         logger.info(responseEntity.toString());
+        return responseEntity;
+
 
     }
 

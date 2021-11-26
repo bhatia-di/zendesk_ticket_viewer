@@ -27,9 +27,9 @@ public class ZendeskController {
     }
 
     @RequestMapping(value = "/api/v1/tickets", method = RequestMethod.GET)
-    public ResponseEntity<List<Tickets>> listAllTickets() {
+    public ResponseEntity<Object> listAllTickets() {
         logger.info("GET Request made to API: /api/v1/tickets");
-        zendeskRestClient.getAllTickets();
-        return new ResponseEntity<>(new ArrayList<Tickets>(), HttpStatus.OK);
+
+        return new ResponseEntity<>(zendeskRestClient.getAllTickets(), HttpStatus.OK);
     }
 }
