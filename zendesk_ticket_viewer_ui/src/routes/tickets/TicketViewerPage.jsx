@@ -23,7 +23,7 @@ export default function TicketViewerPage() {
         {
         tickets.map((ticket, index) =>
 
-          <Accordion.Item key={"accordion" + index + ""}>
+          <Accordion.Item eventKey={"accordion" + index + ""}>
               <Accordion.Header>{ticket.subject}</Accordion.Header>
               <Accordion.Body>
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
