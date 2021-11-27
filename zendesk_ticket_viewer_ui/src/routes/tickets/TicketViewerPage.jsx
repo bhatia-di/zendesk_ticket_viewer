@@ -17,7 +17,7 @@ export default function TicketViewerPage() {
   if (tickets) {
     return (
     <div className={"container-fluid"}>
-      <h1><i className="fa fa-amazon mr-2"  />You are in TicketViewerPage Section</h1>
+      <h1><i className="fa fa-amazon mr-2"  />Let's view all tickets ...</h1>
       <Accordion>
 
         {

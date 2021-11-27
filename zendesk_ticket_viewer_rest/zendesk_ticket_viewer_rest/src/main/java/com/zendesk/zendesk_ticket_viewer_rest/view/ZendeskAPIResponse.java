@@ -10,8 +10,17 @@ public class ZendeskAPIResponse {
 
 
         private List<Ticket> tickets;
+        private MetaView meta;
 
-        public List<Ticket> getTickets() {
+        public MetaView getMeta() {
+            return meta;
+        }
+
+        public void setMeta(MetaView meta) {
+            this.meta = meta;
+         }
+
+    public List<Ticket> getTickets() {
             return tickets;
         }
 
