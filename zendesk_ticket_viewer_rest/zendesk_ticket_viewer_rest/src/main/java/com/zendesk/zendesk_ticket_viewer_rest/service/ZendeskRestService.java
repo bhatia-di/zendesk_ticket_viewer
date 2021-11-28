@@ -1,27 +1,17 @@
 package com.zendesk.zendesk_ticket_viewer_rest.service;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import com.fasterxml.jackson.module.paramnames.ParameterNamesModule;
-import com.zendesk.zendesk_ticket_viewer_rest.exception.ZendeskAPIException;
+import com.zendesk.zendesk_ticket_viewer_rest.exception.ClientException;
+import com.zendesk.zendesk_ticket_viewer_rest.exception.ServiceException;
 import com.zendesk.zendesk_ticket_viewer_rest.utils.APIEndPoints;
-import com.zendesk.zendesk_ticket_viewer_rest.view.Ticket;
 import com.zendesk.zendesk_ticket_viewer_rest.view.ZendeskAPIResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.tomcat.util.codec.binary.Base64;
 
 import java.nio.charset.Charset;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -29,7 +19,7 @@ import org.springframework.web.client.RestTemplate;
 @Service
 @Slf4j
 @RequiredArgsConstructor
-public class ZendeskRestClient {
+public class ZendeskRestService {
 
     public static final String REST_SERVICE_URL = "https://zcczendeskcodingchallenge3911.zendesk.com";
     public static final String username = "bhatia.di@northeastern.edu";
@@ -48,21 +38,15 @@ public class ZendeskRestClient {
         }};
     }
 
-    public ZendeskAPIResponse getAllTickets(Map<String, String> requestParameters) throws ZendeskAPIException {
+    public ZendeskAPIResponse getAllTickets(Map<String, String> requestParameters) throws ClientException, ServiceException {
 
         log.info("----- Making an Zendesk API call------");
 
-        String prefixURL = Objects.isNull(requestParameters.get("page")) && Objects.isNull(requestParameters.get("pageLink"))
-                ? APIEndPoints.getZendeskTicketsURLWithPageSize
-                .replace("{pageSize}", String.valueOf(requestParameters.get("pageSize")))
-                : APIEndPoints.getZendeskTicketsURLWithPageLink
-                .replace("{pageLink}", requestParameters.get("pageLink"))
-                .replace("{page}", requestParameters.get("pageLink"));
-        
+        String lastSegmentURL = APIEndPoints.convertRawURLToZendeskURL(requestParameters);
 
         try {
             ResponseEntity<ZendeskAPIResponse> responseEntity = restTemplate.exchange
-                    (REST_SERVICE_URL + prefixURL, HttpMethod.GET,
+                    (REST_SERVICE_URL + lastSegmentURL, HttpMethod.GET,
                             new HttpEntity<ZendeskAPIResponse>(createHeaders(username, password)),
                             ZendeskAPIResponse.class);
 
@@ -74,12 +58,12 @@ public class ZendeskRestClient {
             } else {
                 // TODO Exception. get message
 
-                throw new ZendeskAPIException("Could not make connection with the Zendesk API");
+                throw new ClientException("Could not make connection with the Zendesk API");
             }
 
 
         } catch (Exception e) {
-            throw new ZendeskAPIException("Request failed with an error");
+            throw new ServiceException("Request failed with an error");
         }
 
 
