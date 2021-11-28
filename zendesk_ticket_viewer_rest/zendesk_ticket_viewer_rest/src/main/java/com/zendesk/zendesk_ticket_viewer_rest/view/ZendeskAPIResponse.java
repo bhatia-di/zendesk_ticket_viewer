@@ -20,7 +20,7 @@ public class ZendeskAPIResponse {
             this.meta = meta;
          }
 
-    public List<Ticket> getTickets() {
+        public List<Ticket> getTickets() {
             return tickets;
         }
 
