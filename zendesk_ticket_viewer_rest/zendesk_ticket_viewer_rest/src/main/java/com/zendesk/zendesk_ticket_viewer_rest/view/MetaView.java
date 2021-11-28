@@ -1,32 +1,39 @@
 package com.zendesk.zendesk_ticket_viewer_rest.view;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class MetaView {
+    @JsonProperty("has_more")
+    private boolean isMore;
 
-    private boolean has_more;
-    private String before_cursor;
-    private String after_cursor;
+    @JsonProperty("before_cursor")
+    private String before;
 
-    public boolean isHas_more() {
-        return has_more;
+    @JsonProperty("after_cursor")
+    private String after;
+
+    public boolean isMore() {
+        return isMore;
     }
 
-    public void setHas_more(boolean has_more) {
-        this.has_more = has_more;
+    public void setMore(boolean more) {
+        isMore = more;
     }
 
-    public String getBefore_cursor() {
-        return before_cursor;
+    public String getBefore() {
+        return before;
     }
 
-    public void setBefore_cursor(String before_cursor) {
-        this.before_cursor = before_cursor;
+    public void setBefore(String before) {
+        this.before = before;
     }
 
-    public String getAfter_cursor() {
-        return after_cursor;
+    public String getAfter() {
+        return after;
     }
 
-    public void setAfter_cursor(String after_cursor) {
-        this.after_cursor = after_cursor;
+    public void setAfter(String after) {
+        this.after = after;
     }
 }

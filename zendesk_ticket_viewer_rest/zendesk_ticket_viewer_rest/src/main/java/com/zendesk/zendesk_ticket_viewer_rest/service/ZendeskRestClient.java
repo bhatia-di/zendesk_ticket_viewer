@@ -6,9 +6,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.fasterxml.jackson.module.paramnames.ParameterNamesModule;
+import com.zendesk.zendesk_ticket_viewer_rest.exception.ZendeskAPIException;
 import com.zendesk.zendesk_ticket_viewer_rest.utils.APIEndPoints;
 import com.zendesk.zendesk_ticket_viewer_rest.view.Ticket;
 import com.zendesk.zendesk_ticket_viewer_rest.view.ZendeskAPIResponse;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.tomcat.util.codec.binary.Base64;
 
@@ -26,22 +28,13 @@ import org.springframework.web.client.RestTemplate;
 
 @Service
 @Slf4j
+@RequiredArgsConstructor
 public class ZendeskRestClient {
 
     public static final String REST_SERVICE_URL = "https://zcczendeskcodingchallenge3911.zendesk.com";
     public static final String username = "bhatia.di@northeastern.edu";
     public static final String password = "ZendeskCodingChallenge";
-    private ObjectMapper objectMapper;
     RestTemplate restTemplate;
-
-    public ZendeskRestClient() {
-
-        objectMapper = new ObjectMapper().registerModule(new ParameterNamesModule())
-                .registerModule(new Jdk8Module())
-                .registerModule(new JavaTimeModule());
-        restTemplate = new RestTemplate();
-
-    }
 
 
 
@@ -55,7 +48,7 @@ public class ZendeskRestClient {
         }};
     }
 
-    public ResponseEntity getAllTickets(Map<String, String> requestParameters) {
+    public ZendeskAPIResponse getAllTickets(Map<String, String> requestParameters) throws ZendeskAPIException {
 
         log.info("----- Making an Zendesk API call------");
 
@@ -64,7 +57,7 @@ public class ZendeskRestClient {
                 .replace("{pageSize}", String.valueOf(requestParameters.get("pageSize")))
                 : APIEndPoints.getZendeskTicketsURLWithPageLink
                 .replace("{pageLink}", requestParameters.get("pageLink"))
-                .replace("{page}", requestParameters.get("page"));
+                .replace("{page}", requestParameters.get("pageLink"));
         
 
         try {
@@ -77,15 +70,16 @@ public class ZendeskRestClient {
 
                 ZendeskAPIResponse response = responseEntity.getBody();
 
-                return new ResponseEntity(response, HttpStatus.OK);
+                return response;
             } else {
+                // TODO Exception. get message
 
-                return new ResponseEntity("Could not make connection with the Zendesk API", HttpStatus.BAD_REQUEST);
+                throw new ZendeskAPIException("Could not make connection with the Zendesk API");
             }
 
 
         } catch (Exception e) {
-                return  new ResponseEntity("Request failed with an error ", HttpStatus.INTERNAL_SERVER_ERROR);
+            throw new ZendeskAPIException("Request failed with an error");
         }
 
 

@@ -25,10 +25,10 @@ export default function TicketViewerPage() {
 
 
   const fetchAllTickets = () => {
-  let params = {"page": page, "pageSize": pageSize, "pageLink": pageLink};
+  let params = page == null ? {"pageSize": pageSize} : {"page": page, "pageSize": pageSize, "pageLink": pageLink};
     console.log(params);
 
-    fetch(APIURLS.getTicketsURL + "/" + new URLSearchParams(params).toString())
+    fetch(APIURLS.getTicketsURL + "?" + new URLSearchParams(params).toString())
     .then(response => response.json())
                   .then(result => {
                       setTickets(result.tickets);
@@ -45,11 +45,11 @@ export default function TicketViewerPage() {
 
   const useMetaAndSetPageLink = (pageLink) => {
           setPageLink(pageLink);
-          if (meta.hasOwnProperty(pageLink)) {
-              setPage(meta[pageLink]);
+          if (meta.hasOwnProperty(pageLink + "_cursor")) {
+              setPage(meta[pageLink + "_cursor"]);
           }
           setTickets(null);
-
+          fetchAllTickets();
   };
 
 

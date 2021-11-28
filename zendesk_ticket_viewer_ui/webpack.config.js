@@ -12,7 +12,16 @@ module.exports = {
   devServer: {
     hot: true,
     open: true,
-    proxy: { "/api/**": { target: 'http://localhost:8080', secure: false }  },
+    server: 'http',
+    proxy: {
+    '/api': {
+        target: 'http://localhost:9000',
+        changeOrigin: true,
+        secure:false,
+        pathRewrite: {'^/api': '/api'},
+        logLevel: 'debug'
+    }
+      },
 
     historyApiFallback: true,
   },

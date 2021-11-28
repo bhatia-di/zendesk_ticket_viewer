@@ -1,8 +1,10 @@
 package com.zendesk.zendesk_ticket_viewer_rest.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.zendesk.zendesk_ticket_viewer_rest.exception.ZendeskAPIException;
 import com.zendesk.zendesk_ticket_viewer_rest.service.ZendeskRestClient;
 import com.zendesk.zendesk_ticket_viewer_rest.view.Ticket;
+import com.zendesk.zendesk_ticket_viewer_rest.view.ZendeskAPIResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
@@ -15,16 +17,17 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 @Slf4j
-@RestController("zendesk/")
+@RestController
 @RequiredArgsConstructor
 public class ZendeskController {
 
     private final ZendeskRestClient zendeskRestClient;
 
 
-    @GetMapping(value = {"v1/tickets"})
-    public ResponseEntity listAllTickets(@RequestParam Map<String,String> requestParameters) {
+    @RequestMapping(value = {"/api/v1/tickets"}, method = RequestMethod.GET)
+    public ResponseEntity listAllTickets(@RequestParam Map<String,String> requestParameters) throws ZendeskAPIException {
         log.info("GET Request made to API: /api/v1/tickets");
-        return zendeskRestClient.getAllTickets(requestParameters);
+        ZendeskAPIResponse response =  zendeskRestClient.getAllTickets(requestParameters);
+        return new ResponseEntity<ZendeskAPIResponse>(response, HttpStatus.OK);
     }
 }

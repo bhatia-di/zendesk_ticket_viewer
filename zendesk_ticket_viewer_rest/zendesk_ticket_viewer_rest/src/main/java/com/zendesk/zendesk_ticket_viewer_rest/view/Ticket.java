@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Ticket {
-
+    private long id;
     private boolean allow_attachments;
     private boolean allow_channelback;
     private String assignee_email;
@@ -35,6 +35,14 @@ public class Ticket {
     private String[] tags;
     private String type;
     private LocalDateTime updated_at;
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
 
     public boolean isAllow_attachments() {
         return allow_attachments;
