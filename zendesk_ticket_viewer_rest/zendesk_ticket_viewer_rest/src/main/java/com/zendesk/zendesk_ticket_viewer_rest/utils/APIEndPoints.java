@@ -10,9 +10,9 @@ public class APIEndPoints {
 
     public static String convertRawURLToZendeskURL (Map<String, String> requestParameters) {
         return Objects.isNull(requestParameters.get("page")) && Objects.isNull(requestParameters.get("pageLink"))
-                ? APIEndPoints.getZendeskTicketsURLWithPageSize
+                ? getZendeskTicketsURLWithPageSize
                 .replace("{pageSize}", String.valueOf(requestParameters.get("pageSize")))
-                : APIEndPoints.getZendeskTicketsURLWithPageLink
+                : getZendeskTicketsURLWithPageLink
                 .replace("{pageLink}", requestParameters.get("pageLink"))
                 .replace("{page}", requestParameters.get("pageLink"));
 

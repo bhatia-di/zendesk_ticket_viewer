@@ -1,6 +1,7 @@
 package com.zendesk.zendesk_ticket_viewer_rest.controller;
 
 import com.zendesk.zendesk_ticket_viewer_rest.exception.ClientException;
+import com.zendesk.zendesk_ticket_viewer_rest.exception.GlobalExceptionHandler;
 import com.zendesk.zendesk_ticket_viewer_rest.exception.ServiceException;
 import com.zendesk.zendesk_ticket_viewer_rest.service.ZendeskRestService;
 import com.zendesk.zendesk_ticket_viewer_rest.view.ZendeskAPIResponse;
@@ -21,7 +22,8 @@ public class ZendeskController {
 
 
     @RequestMapping(value = {"/api/v1/tickets"}, method = RequestMethod.GET)
-    public ResponseEntity listAllTickets(@RequestParam Map<String,String> requestParameters) throws ClientException, ServiceException {
+    @ExceptionHandler({ ClientException.class, ServiceException.class })
+    public ResponseEntity listAllTickets(@RequestParam Map<String,String> requestParameters)  {
         log.info("GET Request made to API: /api/v1/tickets");
         ZendeskAPIResponse response =  zendeskRestClient.getAllTickets(requestParameters);
         return new ResponseEntity<ZendeskAPIResponse>(response, HttpStatus.OK);

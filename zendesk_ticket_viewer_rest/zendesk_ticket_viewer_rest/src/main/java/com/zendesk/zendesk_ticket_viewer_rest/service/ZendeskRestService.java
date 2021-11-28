@@ -24,7 +24,7 @@ public class ZendeskRestService {
     public static final String REST_SERVICE_URL = "https://zcczendeskcodingchallenge3911.zendesk.com";
     public static final String username = "bhatia.di@northeastern.edu";
     public static final String password = "ZendeskCodingChallenge";
-    RestTemplate restTemplate;
+    private final RestTemplate restTemplate = new RestTemplate();
 
 
 
@@ -45,6 +45,7 @@ public class ZendeskRestService {
         String lastSegmentURL = APIEndPoints.convertRawURLToZendeskURL(requestParameters);
 
         try {
+
             ResponseEntity<ZendeskAPIResponse> responseEntity = restTemplate.exchange
                     (REST_SERVICE_URL + lastSegmentURL, HttpMethod.GET,
                             new HttpEntity<ZendeskAPIResponse>(createHeaders(username, password)),

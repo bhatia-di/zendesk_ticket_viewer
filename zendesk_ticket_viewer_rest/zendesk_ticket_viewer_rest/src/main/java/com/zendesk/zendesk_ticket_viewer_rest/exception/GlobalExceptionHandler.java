@@ -11,7 +11,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 @ControllerAdvice
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
-    @ExceptionHandler(value = {Throwable.class})
+    @ExceptionHandler(value = {ClientException.class, ServiceException.class})
     @ResponseBody
     protected ResponseEntity handleConflict(Throwable exception) {
       log.error("GlobalExceptionHandler::handleConflict", exception);
