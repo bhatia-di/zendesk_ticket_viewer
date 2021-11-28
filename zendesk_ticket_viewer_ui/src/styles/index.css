@@ -1,0 +1,19 @@
+.border-info {
+    border-left-color: #1f939c !important;
+}
+
+.card-layout {
+    padding: 10px;
+    margin: 20px 0;
+    border: 1px solid #eee;
+    border-left-width: 5px;
+    border-radius: 5px;
+}
+
+* {
+  font-family: 'Josefin Sans', sans-serif !important;
+}
+
+.color-aqua {
+    color: #1f939c;
+}

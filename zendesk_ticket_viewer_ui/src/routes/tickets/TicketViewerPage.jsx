@@ -2,22 +2,56 @@ import React, { useState } from "react";
 import ReactLoading from 'react-loading';
 import * as APIURLS from "../../constants/APIConstants";
 import Accordion from 'react-bootstrap/Accordion';
-
+// import "../../styles/index.css";
+import { faClipboardList, faChevronCircleLeft, faChevronCircleRight } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export default function TicketViewerPage() {
-  const [tickets, setTickets] = useState(null);
+  const [tickets, setTickets] = useState([{subject: "ABC"}]);
+  const [page, setPage] = useState("null");
+  const [pageLink, setPageLink] = useState("null");
+  const [pageSize, setPageSize] = useState("null");
+
+
   React.useEffect(() => {
-        fetch(APIURLS.getTicketsURL).then(response => response.json())
-        .then(result => {
-            setTickets(result.tickets);
-        });
- }, []);
+
+  let params = {"page": page, "pageSize": pageSize, "pageLink": pageLink};
+  console.log(params);
+
+//   fetch(APIURLS.getTicketsURL + "/" + new URLSearchParams(params).toString())
+//   .then(response => response.json())
+//                 .then(result => {
+//                     setTickets(result.tickets);
+//                     }).catch((error) => {
+//                     console.error("Fetch API Call failed with an error" + error);
+//                     });
+
+
+  }, []);
+
+
 
 
   if (tickets) {
     return (
     <div className={"container-fluid"}>
-      <h1><i className="fa fa-amazon mr-2"  />Let's view all tickets ...</h1>
+    <div className={"card-layout"}>
+       <h3 className={"color-aqua"}>
+        <FontAwesomeIcon icon={faClipboardList} color="#1f939c" />
+        <span className={"ml-2"}>Let's view all tickets!</span>
+       </h3>
+    </div>
+
+    <div className={"row"}>
+        <div className={"col-10"}>
+        </div>
+        <div className={"col-2"}>
+
+            <a><FontAwesomeIcon icon={faChevronCircleLeft} color="#1f939c" size="md" /></a>
+            <a className={"ml-2"} ><FontAwesomeIcon icon={faChevronCircleRight} color="#1f939c" size="md" /></a>
+        </div>
+
+    </div>
       <Accordion>
 
         {

@@ -3,7 +3,7 @@ import Header from "./components/Header";
 import About from "./routes/about/About";
 import TicketViewerPage from "./routes/tickets/TicketViewerPage";
 import Home from "./routes/home/Home";
-
+import 'bootstrap/dist/css/bootstrap.min.css';
 import { Routes, Route, Link } from "react-router-dom";
 
 

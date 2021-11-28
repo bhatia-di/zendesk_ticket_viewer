@@ -9,6 +9,7 @@ import com.fasterxml.jackson.module.paramnames.ParameterNamesModule;
 import com.zendesk.zendesk_ticket_viewer_rest.utils.APIEndPoints;
 import com.zendesk.zendesk_ticket_viewer_rest.view.Ticket;
 import com.zendesk.zendesk_ticket_viewer_rest.view.ZendeskAPIResponse;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.tomcat.util.codec.binary.Base64;
 
 import java.nio.charset.Charset;
@@ -24,8 +25,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 @Service
+@Slf4j
 public class ZendeskRestClient {
-    private static final Logger logger = LoggerFactory.getLogger(ZendeskRestClient.class);
 
     public static final String REST_SERVICE_URL = "https://zcczendeskcodingchallenge3911.zendesk.com";
     public static final String username = "bhatia.di@northeastern.edu";
@@ -56,7 +57,7 @@ public class ZendeskRestClient {
 
     public ResponseEntity getAllTickets(Map<String, String> requestParameters) {
 
-        logger.info("----- Making an Zendesk API call------");
+        log.info("----- Making an Zendesk API call------");
 
         String prefixURL = Objects.isNull(requestParameters.get("page")) && Objects.isNull(requestParameters.get("pageLink"))
                 ? APIEndPoints.getZendeskTicketsURLWithPageSize

@@ -23,7 +23,7 @@ public class Ticket {
     private long[] follower_ids;
     private long[] followup_ids;
     private boolean is_public;
-    private Object meta;
+    private MetaView meta;
     // Allowed values are "urgent", "high", "normal", or "low".
     private String priority;
     private String raw_subject;
@@ -148,11 +148,11 @@ public class Ticket {
         this.is_public = is_public;
     }
 
-    public Object getMeta() {
+    public MetaView getMeta() {
         return meta;
     }
 
-    public void setMeta(Object meta) {
+    public void setMeta(MetaView meta) {
         this.meta = meta;
     }
 

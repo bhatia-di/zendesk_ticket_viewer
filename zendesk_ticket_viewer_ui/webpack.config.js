@@ -10,11 +10,8 @@ module.exports = {
       extensions: [".ts", ".js", ".jsx", ".tsx"],
   },
   devServer: {
-    //publicPath: "/",
-    //contentBase: "./dist",
     hot: true,
     open: true,
-    //port: 9090,
     proxy: { "/api/**": { target: 'http://localhost:8080', secure: false }  },
 
     historyApiFallback: true,
@@ -32,10 +29,11 @@ module.exports = {
         },
       },
       {
-        test: /\.(sass|less|css)$/,
-        include: path.resolve(__dirname, "src"),
-        use: ["style-loader", "css-loader", "less-loader"],
+        test: /\.(sass|less|css|scss)$/,
+        //include: path.resolve(__dirname, "src"),
+        use: ["style-loader", "css-loader"],
       },
+
       {
         test: /\.(jpe?g|png|gif|svg)$/i,
         loader:'file-loader'
