@@ -130,7 +130,7 @@ export default function TicketViewerPage() {
 
                      <Accordion.Item key={"ticketaccordion" + index} eventKey={"accordion" + index + ""}>
                          <Accordion.Header onClick={(event) => {subjectHeaderClicked("ticket-" + ticket.id)}} >
-                                <h4>{ticket.subject}</h4>
+                                <h5>{ticket.subject}</h5>
                                 <TypeBadge type={ticket.type} />
                                 <TypeBadge type={ticket.status} />
 

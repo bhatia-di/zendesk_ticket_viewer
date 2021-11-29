@@ -33,7 +33,7 @@ export default function TypeBadge(typeBadgeProps) {
 
 
  if (typeBadgeProps.type == null) return null;
-
+ if (typeBadgeProps.typeBadge == "tag") return <span className={"p-1"}><Badge color="dark" pill> {typeBadgeProps.type} </Badge></span>
  return (
       <span className={"m-1 p-1"}>{ renderBadge(typeBadgeProps.type) }</span>
     );
