@@ -7,6 +7,8 @@ public class APIEndPoints {
 
     public static String getZendeskTicketsURLWithPageSize = "/api/v2/tickets.json?page[size]={pageSize}";
     public static String getZendeskTicketsURLWithPageLink = "/api/v2/tickets.json?page[size]={pageSize}&page[{pageLink}]={page}";
+    public static String getZendeskDetailedTicketURL = "/api/v2/tickets/{ticket_id}";
+
 
     public static String convertRawURLToZendeskURL (Map<String, String> requestParameters) {
         return Objects.isNull(requestParameters.get("page")) && Objects.isNull(requestParameters.get("pageLink"))
@@ -18,5 +20,9 @@ public class APIEndPoints {
 
 
 
+    }
+
+    public static String convertRawURLToZendeskDetailedTicketURL(String ticketId) {
+        return getZendeskDetailedTicketURL.replace("{ticketId}", ticketId);
     }
 }
