@@ -15,8 +15,9 @@ public class APIEndPoints {
                 ? getZendeskTicketsURLWithPageSize
                 .replace("{pageSize}", String.valueOf(requestParameters.get("pageSize")))
                 : getZendeskTicketsURLWithPageLink
+                .replace("{pageSize}", String.valueOf(requestParameters.get("pageSize")))
                 .replace("{pageLink}", requestParameters.get("pageLink"))
-                .replace("{page}", requestParameters.get("pageLink"));
+                .replace("{page}", requestParameters.get("page"));
 
 
 

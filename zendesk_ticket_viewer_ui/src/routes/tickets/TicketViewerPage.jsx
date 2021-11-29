@@ -3,7 +3,7 @@ import ReactLoading from 'react-loading';
 import * as APIURLS from "../../constants/APIConstants";
 import Accordion from 'react-bootstrap/Accordion';
 import {Input} from 'reactstrap';
-
+import DetailedTicketViewerBody from "./DetailedTicketViewerBody";
 import "../../styles/index.css";
 import { faClipboardList, faChevronCircleLeft, faChevronCircleRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -11,12 +11,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 export default function TicketViewerPage() {
   const [tickets, setTickets] = useState(null);
   const [meta, setMeta] = useState(null);
-  const [page, setPage] = useState(null);
-  const [pageLink, setPageLink] = useState(null);
   const [pageSize, setPageSize] = useState(25);
+  const [activeTicket, setActiveTicket] = useState(null);
 
 
   React.useEffect(() => {
+  console.log("Fetching Tickets cause component mounted");
 
   fetchAllTickets();
 
@@ -24,9 +24,11 @@ export default function TicketViewerPage() {
   }, []);
 
 
-  const fetchAllTickets = () => {
-  let params = page == null ? {"pageSize": pageSize} : {"page": page, "pageSize": pageSize, "pageLink": pageLink};
+  const fetchAllTickets = (pageLink) => {
+  const metaPageLinkValue = pageLink + "_cursor";
+  let params = pageLink == null ? {"pageSize": pageSize} : {"page": meta.hasOwnProperty(metaPageLinkValue) ? meta[metaPageLinkValue] : null, "pageSize": pageSize, "pageLink": pageLink};
     console.log(params);
+    setTickets(null);
 
     fetch(APIURLS.getTicketsURL + "?" + new URLSearchParams(params).toString())
     .then(response => response.json())
@@ -44,20 +46,17 @@ export default function TicketViewerPage() {
 
 
   const useMetaAndSetPageLink = (pageLink) => {
-          setPageLink(pageLink);
-          if (meta.hasOwnProperty(pageLink + "_cursor")) {
-              setPage(meta[pageLink + "_cursor"]);
-          }
-          setTickets(null);
-          fetchAllTickets();
+            console.log("Fetching Tickets cause before or after clicked");
+          fetchAllTickets(pageLink);
   };
 
 
-  React.useEffect(() => {
 
-  fetchAllTickets();
 
-  }, [page]);
+  const subjectHeaderClicked = (activeTicket) => {
+    setActiveTicket(activeTicket);
+
+  };
 
 
 
@@ -79,8 +78,8 @@ export default function TicketViewerPage() {
 
         <div className={"row cursor-pointer"}>
         <div className={"col-4"}>
-          <a onClick={() => useMetaAndSetPageLink("before")} className={"p-1"}><FontAwesomeIcon icon={faChevronCircleLeft} color="#1f939c" size="lg" /></a>
-          <a onClick={() => useMetaAndSetPageLink("after")}className={"p-1"} ><FontAwesomeIcon icon={faChevronCircleRight} color="#1f939c" size="lg" /></a>
+          <a onClick={() => {useMetaAndSetPageLink("before")}} className={"p-1"}><FontAwesomeIcon icon={faChevronCircleLeft} color="#1f939c" size="lg" /></a>
+          <a onClick={() => {useMetaAndSetPageLink("after")}} className={"p-1"} ><FontAwesomeIcon icon={faChevronCircleRight} color="#1f939c" size="lg" /></a>
           <span className={"p-1"}>Show </span>
 
         </div>
@@ -122,16 +121,13 @@ export default function TicketViewerPage() {
         {
         tickets.map((ticket, index) =>
 
-          <Accordion.Item eventKey={"accordion" + index + ""}>
-              <Accordion.Header>{ticket.subject}</Accordion.Header>
+          <Accordion.Item key={"ticketaccordion" + index} eventKey={"accordion" + index + ""}>
+              <Accordion.Header onClick={(event) => {subjectHeaderClicked("ticket-" + ticket.id)}} >
+              {ticket.subject}
+              </Accordion.Header>
               <Accordion.Body>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-                    veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-                    commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-                    velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-                    cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id
-                    est laborum.
+                    <DetailedTicketViewerBody ticketId={ticket.id} activeTicket={activeTicket} />
+
               </Accordion.Body>
 
           </Accordion.Item>
