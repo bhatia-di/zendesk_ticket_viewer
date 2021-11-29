@@ -1,6 +1,7 @@
 package com.zendesk.zendesk_ticket_viewer_rest.view;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.tomcat.jni.Local;
@@ -26,7 +27,9 @@ public class Ticket {
     private String[] email_cc_ids;
     private long[] follower_ids;
     private long[] followup_ids;
-    private boolean is_public;
+
+    @JsonProperty("is_public")
+    private boolean isPublic;
     private MetaView meta;
     // Allowed values are "urgent", "high", "normal", or "low".
     private String priority;
