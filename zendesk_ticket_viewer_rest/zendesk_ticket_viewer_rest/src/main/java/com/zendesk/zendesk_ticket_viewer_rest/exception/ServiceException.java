@@ -18,7 +18,7 @@ public class ServiceException extends RuntimeException {
 
     public ServiceException(String errorMessage) {
         super(errorMessage);
-        this.httpStatus = HttpStatus.BAD_REQUEST;
+        this.httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
         this.time = LocalDateTime.now();
         this.message = errorMessage;
 

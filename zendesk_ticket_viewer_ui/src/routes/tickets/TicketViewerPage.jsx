@@ -7,7 +7,7 @@ import Accordion from 'react-bootstrap/Accordion';
 import {Input} from 'reactstrap';
 import DetailedTicketViewerBody from "./DetailedTicketViewerBody";
 import "../../styles/index.css";
-import { faClipboardList, faChevronCircleLeft, faChevronCircleRight, faExclamationTriangle } from "@fortawesome/free-solid-svg-icons";
+import { faClipboardList, faClipboardCheck, faChevronCircleLeft, faChevronCircleRight, faExclamationTriangle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export default function TicketViewerPage() {
@@ -75,21 +75,25 @@ export default function TicketViewerPage() {
     </div>
 
     <div className={"row mb-2"}>
-        <div className={"col-8"}>
-        </div>
         <div className={"col-4"}>
+        </div>
+        <div className={"col-8"}>
 
         <div className={"row cursor-pointer"}>
-        <div className={"col-4"}>
+        <div className="col-3">
+             <small className={"float-right"}> Total Count of Tickets: {tickets.length} </small>
+        </div>
+        <div className={"col-3"}>
           <a onClick={() => {useMetaAndSetPageLink("before")}} className={"p-1"}><FontAwesomeIcon icon={faChevronCircleLeft} color="#1f939c" size="lg" /></a>
           <a onClick={() => {useMetaAndSetPageLink("after")}} className={"p-1"} ><FontAwesomeIcon icon={faChevronCircleRight} color="#1f939c" size="lg" /></a>
           <span className={"p-1"}>Show </span>
 
         </div>
-        <div className={"col-4 p-0"}>
+        <div className={"col-3 p-0"}>
             <Input onChange={(event) => {setPageSize(event?.target?.value)}}
                                 id="pageSizeInput"
                                 name="pageSizeInput"
+                                value={pageSize}
                                 className={"cursor-pointer"}
                                 type="select"
                               >
@@ -110,7 +114,7 @@ export default function TicketViewerPage() {
                                 </option>
                               </Input>
         </div>
-        <div className={"col-4"}>
+        <div className={"col-3"}>
         <span className={"float-left"}>Results</span>
         </div>
         </div>
@@ -130,7 +134,9 @@ export default function TicketViewerPage() {
 
                      <Accordion.Item key={"ticketaccordion" + index} eventKey={"accordion" + index + ""}>
                          <Accordion.Header onClick={(event) => {subjectHeaderClicked("ticket-" + ticket.id)}} >
-                                <h5>{ticket.subject}</h5>
+                                <h5>
+                                <FontAwesomeIcon icon={faClipboardList} className={"m-1"} />
+                                   {ticket.subject}</h5>
                                 <TypeBadge type={ticket.type} />
                                 <TypeBadge type={ticket.status} />
 

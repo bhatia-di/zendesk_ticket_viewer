@@ -43,17 +43,27 @@ public class ZendeskRestService {
 
         log.info("----- Making an Zendesk API call :: getAllTickets ------");
         log.info("Zendesk Properties: {}", zendeskProperties.getUrl());
-
-        String lastSegmentURL = APIEndPoints.convertRawURLToZendeskURL(requestParameters);
-
+        String lastSegmentURL;
+        ResponseEntity<ZendeskMultiTicketAPIResponse> responseEntity;
         try {
 
-            ResponseEntity<ZendeskMultiTicketAPIResponse> responseEntity = restTemplate.exchange
-                    (zendeskProperties.getUrl() + lastSegmentURL, HttpMethod.GET,
-                            new HttpEntity<ZendeskMultiTicketAPIResponse>(createHeaders(zendeskProperties.getUsername(), zendeskProperties.getPassword())),
-                            ZendeskMultiTicketAPIResponse.class);
+         lastSegmentURL = APIEndPoints.convertRawURLToZendeskURL(requestParameters);
+
+        } catch (Exception e) {
+            throw new ServiceException("Request failed with an error. Incorrect paramaters sent");
+        }
 
 
+
+            try {
+                responseEntity = restTemplate.exchange
+                        (zendeskProperties.getUrl() + lastSegmentURL, HttpMethod.GET,
+                                new HttpEntity<ZendeskMultiTicketAPIResponse>(createHeaders(zendeskProperties.getUsername(), zendeskProperties.getPassword())),
+                                ZendeskMultiTicketAPIResponse.class);
+
+            } catch (Exception e) {
+                throw new ClientException("Could not make connection with the Zendesk API");
+            }
 
             if (responseEntity.getStatusCode().is2xxSuccessful()) {
                 log.info("----------- Get Tickets Response fetched. ------------");
@@ -70,9 +80,7 @@ public class ZendeskRestService {
             }
 
 
-        } catch (Exception e) {
-            throw new ServiceException("Request failed with an error");
-        }
+
 
 
 
@@ -82,8 +90,15 @@ public class ZendeskRestService {
 
     public ZendeskDetailedTicketResponse getDetailedTicket(String ticketId) throws ClientException, ServiceException {
         log.info("----- Making an Zendesk API call :: getAllTickets ------");
+        String lastSegmentURL;
+        try {
 
-        String lastSegmentURL = APIEndPoints.convertRawURLToZendeskDetailedTicketURL(ticketId);
+            lastSegmentURL = APIEndPoints.convertRawURLToZendeskDetailedTicketURL(ticketId);
+
+        } catch (Exception e) {
+            throw new ServiceException("Request failed with an error. Incorrect paramaters sent");
+        }
+
 
         try {
 
@@ -105,7 +120,7 @@ public class ZendeskRestService {
 
 
         } catch (Exception e) {
-            throw new ServiceException("Request failed with an error");
+            throw new ClientException("Could not make connection with the Zendesk API");
         }
 
 
