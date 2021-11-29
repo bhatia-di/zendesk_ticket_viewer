@@ -53,6 +53,8 @@ public class ZendeskRestService {
                             new HttpEntity<ZendeskMultiTicketAPIResponse>(createHeaders(zendeskProperties.getUsername(), zendeskProperties.getPassword())),
                             ZendeskMultiTicketAPIResponse.class);
 
+
+
             if (responseEntity.getStatusCode().is2xxSuccessful()) {
                 log.info("----------- Get Tickets Response fetched. ------------");
 

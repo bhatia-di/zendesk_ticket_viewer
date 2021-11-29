@@ -21,8 +21,7 @@ public class ZendeskController {
     private final ZendeskRestService zendeskRestClient;
 
 
-    @RequestMapping(value = {"/api/v1/tickets"}, method = RequestMethod.GET)
-    @ExceptionHandler({ ClientException.class, ServiceException.class })
+    @RequestMapping(value = {"/api/v1/tickets"},  method = RequestMethod.GET)
     public ResponseEntity listAllTickets(@RequestParam Map<String,String> requestParameters)  {
         log.info("GET Request made to API: /api/v1/tickets");
         ZendeskMultiTicketAPIResponse response =  zendeskRestClient.getAllTickets(requestParameters);
@@ -30,7 +29,6 @@ public class ZendeskController {
     }
 
     @RequestMapping(value = {"/api/v1/detailTicket"}, method = RequestMethod.GET)
-    @ExceptionHandler({ ClientException.class, ServiceException.class })
     public ResponseEntity getDetailedTicket(@RequestParam String ticketId)  {
         log.info("GET Request made to API: /api/v1/tickets");
         ZendeskDetailedTicketResponse response =  zendeskRestClient.getDetailedTicket(ticketId);

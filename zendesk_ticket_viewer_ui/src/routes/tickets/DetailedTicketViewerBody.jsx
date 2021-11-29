@@ -12,6 +12,7 @@ import "../../styles/index.css";
 
 export default function DetailedTicketViewerBody(detailedTicketViewerBodyProps) {
     const [ticket, setTicket] = useState(null);
+    const [errorMessage, setErrorMessage] = useState(null);
 
     React.useEffect(() => {
 
@@ -44,6 +45,8 @@ export default function DetailedTicketViewerBody(detailedTicketViewerBodyProps) 
                           });
 
       };
+
+
 
 
 
