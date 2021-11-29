@@ -3,6 +3,8 @@ import ReactLoading from 'react-loading';
 import * as APIURLS from "../../constants/APIConstants";
 import * as Utils from "../../utils/Utils";
 import TypeBadge from "../../components/TypeBadge";
+import ReadMore from "../../components/ReadMore";
+
 import Accordion from 'react-bootstrap/Accordion';
 import {Input} from 'reactstrap';
 import "../../styles/index.css";
@@ -48,6 +50,10 @@ export default function DetailedTicketViewerBody(detailedTicketViewerBodyProps) 
     if(ticket) {
         return (
        <div className={"container-fluid"}>
+
+       <ReadMore text={"Description: " + ticket.description} />
+
+
 
        </div>);
 
