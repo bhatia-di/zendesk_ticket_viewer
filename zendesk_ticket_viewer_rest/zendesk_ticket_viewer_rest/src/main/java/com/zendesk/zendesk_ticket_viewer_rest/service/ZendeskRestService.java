@@ -1,5 +1,6 @@
 package com.zendesk.zendesk_ticket_viewer_rest.service;
 
+import com.zendesk.zendesk_ticket_viewer_rest.config.ZendeskProperties;
 import com.zendesk.zendesk_ticket_viewer_rest.exception.ClientException;
 import com.zendesk.zendesk_ticket_viewer_rest.exception.ServiceException;
 import com.zendesk.zendesk_ticket_viewer_rest.utils.APIEndPoints;
@@ -21,10 +22,9 @@ import org.springframework.web.client.RestTemplate;
 @RequiredArgsConstructor
 public class ZendeskRestService {
 
-    public static final String REST_SERVICE_URL = "https://zcczendeskcodingchallenge3911.zendesk.com";
-    public static final String username = "bhatia.di@northeastern.edu";
-    public static final String password = "ZendeskCodingChallenge";
+
     private final RestTemplate restTemplate = new RestTemplate();
+    private final ZendeskProperties zendeskProperties;
 
 
 
@@ -41,14 +41,15 @@ public class ZendeskRestService {
     public ZendeskMultiTicketAPIResponse getAllTickets(Map<String, String> requestParameters) throws ClientException, ServiceException {
 
         log.info("----- Making an Zendesk API call :: getAllTickets ------");
+        log.info("Zendesk Properties: {}", zendeskProperties.getUrl());
 
         String lastSegmentURL = APIEndPoints.convertRawURLToZendeskURL(requestParameters);
 
         try {
 
             ResponseEntity<ZendeskMultiTicketAPIResponse> responseEntity = restTemplate.exchange
-                    (REST_SERVICE_URL + lastSegmentURL, HttpMethod.GET,
-                            new HttpEntity<ZendeskMultiTicketAPIResponse>(createHeaders(username, password)),
+                    (zendeskProperties.getUrl() + lastSegmentURL, HttpMethod.GET,
+                            new HttpEntity<ZendeskMultiTicketAPIResponse>(createHeaders(zendeskProperties.getUsername(), zendeskProperties.getPassword())),
                             ZendeskMultiTicketAPIResponse.class);
 
             if (responseEntity.getStatusCode().is2xxSuccessful()) {
@@ -82,8 +83,8 @@ public class ZendeskRestService {
         try {
 
             ResponseEntity<ZendeskDetailedTicketResponse> responseEntity = restTemplate.exchange
-                    (REST_SERVICE_URL + lastSegmentURL, HttpMethod.GET,
-                            new HttpEntity<ZendeskMultiTicketAPIResponse>(createHeaders(username, password)),
+                    (zendeskProperties.getUrl() + lastSegmentURL, HttpMethod.GET,
+                            new HttpEntity<ZendeskMultiTicketAPIResponse>(createHeaders(zendeskProperties.getUsername(), zendeskProperties.getPassword())),
                             ZendeskDetailedTicketResponse.class);
 
             if (responseEntity.getStatusCode().is2xxSuccessful()) {
