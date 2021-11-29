@@ -34,9 +34,11 @@ public class Ticket {
     private String recipient;
     private Object requester;
     private Object satisfaction_rating;
+    // "new", "open", "pending", "hold", "solved", or "closed".
     private String status;
     private String subject;
     private String[] tags;
+    //"problem", "incident", "question", or "task".
     private String type;
     private LocalDateTime updated_at;
 

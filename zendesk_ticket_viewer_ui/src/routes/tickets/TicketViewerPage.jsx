@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import ReactLoading from 'react-loading';
 import * as APIURLS from "../../constants/APIConstants";
 import * as Utils from "../../utils/Utils";
-
+import TypeBadge from "../../components/TypeBadge";
 import Accordion from 'react-bootstrap/Accordion';
 import {Input} from 'reactstrap';
 import DetailedTicketViewerBody from "./DetailedTicketViewerBody";
@@ -27,9 +27,9 @@ export default function TicketViewerPage() {
 
 
   const fetchAllTickets = (pageLink) => {
-  const metaPageLinkValue = pageLink + "_cursor";
-  const metaPageValue = meta && meta.hasOwnProperty(metaPageLinkValue) ? meta[metaPageLinkValue] : null;
-  let params = metaPageValue == null ? {"pageSize": pageSize} : {"page": metaPageValue, "pageSize": pageSize, "pageLink": pageLink};
+    const metaPageLinkValue = pageLink + "_cursor";
+    const metaPageValue = meta && meta.hasOwnProperty(metaPageLinkValue) ? meta[metaPageLinkValue] : null;
+    let params = metaPageValue == null ? {"pageSize": pageSize} : {"page": metaPageValue, "pageSize": pageSize, "pageLink": pageLink};
     console.log(params);
     setTickets(null);
 
@@ -37,7 +37,7 @@ export default function TicketViewerPage() {
     .then(response => response.json())
                   .then(result => {
                       setTickets(result.tickets);
-                      setMeta(result.meta)
+                      setMeta(result.meta);
                       }).catch((error) => {
                       console.error("Fetch API Call failed with an error" + error);
                       });
@@ -130,7 +130,12 @@ export default function TicketViewerPage() {
 
                      <Accordion.Item key={"ticketaccordion" + index} eventKey={"accordion" + index + ""}>
                          <Accordion.Header onClick={(event) => {subjectHeaderClicked("ticket-" + ticket.id)}} >
-                         {ticket.subject}
+                                <h4>{ticket.subject}</h4>
+                                <TypeBadge type={ticket.type} />
+                                <TypeBadge type={ticket.status} />
+
+
+
                          </Accordion.Header>
                          <Accordion.Body>
                                <DetailedTicketViewerBody ticketId={ticket.id} activeTicket={activeTicket} />

@@ -24,6 +24,6 @@ public class APIEndPoints {
     }
 
     public static String convertRawURLToZendeskDetailedTicketURL(String ticketId) {
-        return getZendeskDetailedTicketURL.replace("{ticketId}", ticketId);
+        return getZendeskDetailedTicketURL.replace("{ticket_id}", ticketId);
     }
 }

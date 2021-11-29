@@ -13,7 +13,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(value = {ClientException.class, ServiceException.class})
     @ResponseBody
-    protected ResponseEntity handleConflict(Throwable exception) {
+    protected ResponseEntity handleClientAndServiceException(Throwable exception) {
       log.error("GlobalExceptionHandler::handleConflict", exception);
       if (exception instanceof ClientException) {
           return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
@@ -23,6 +23,15 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
           return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                   .build();
       }
+
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .build();
+    }
+
+
+    @ExceptionHandler(value = {Throwable.class})
+    @ResponseBody
+    protected ResponseEntity handleException(Throwable exception) {
 
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .build();
