@@ -20,3 +20,16 @@
 .cursor-pointer {
     cursor: pointer;
 }
+
+.color-red {
+    color: red;
+
+}
+
+.card-jumbotron {
+    padding: 2rem 1rem;
+    margin-bottom: 2rem;
+    background-color: #e9ecef;
+    border-radius: 0.3rem;
+}
+

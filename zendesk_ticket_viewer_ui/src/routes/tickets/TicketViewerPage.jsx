@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import ReactLoading from 'react-loading';
 import * as APIURLS from "../../constants/APIConstants";
+import * as Utils from "../../utils/Utils";
+
 import Accordion from 'react-bootstrap/Accordion';
 import {Input} from 'reactstrap';
 import DetailedTicketViewerBody from "./DetailedTicketViewerBody";
 import "../../styles/index.css";
-import { faClipboardList, faChevronCircleLeft, faChevronCircleRight } from "@fortawesome/free-solid-svg-icons";
+import { faClipboardList, faChevronCircleLeft, faChevronCircleRight, faExclamationTriangle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export default function TicketViewerPage() {
@@ -26,7 +28,8 @@ export default function TicketViewerPage() {
 
   const fetchAllTickets = (pageLink) => {
   const metaPageLinkValue = pageLink + "_cursor";
-  let params = pageLink == null ? {"pageSize": pageSize} : {"page": meta.hasOwnProperty(metaPageLinkValue) ? meta[metaPageLinkValue] : null, "pageSize": pageSize, "pageLink": pageLink};
+  const metaPageValue = meta && meta.hasOwnProperty(metaPageLinkValue) ? meta[metaPageLinkValue] : null;
+  let params = metaPageValue == null ? {"pageSize": pageSize} : {"page": metaPageValue, "pageSize": pageSize, "pageLink": pageLink};
     console.log(params);
     setTickets(null);
 
@@ -116,28 +119,41 @@ export default function TicketViewerPage() {
         </div>
 
     </div>
-      <Accordion>
 
-        {
-        tickets.map((ticket, index) =>
+    {
+        !Utils.isArrayEmpty(tickets)
 
-          <Accordion.Item key={"ticketaccordion" + index} eventKey={"accordion" + index + ""}>
-              <Accordion.Header onClick={(event) => {subjectHeaderClicked("ticket-" + ticket.id)}} >
-              {ticket.subject}
-              </Accordion.Header>
-              <Accordion.Body>
-                    <DetailedTicketViewerBody ticketId={ticket.id} activeTicket={activeTicket} />
+        ?  <Accordion>
 
-              </Accordion.Body>
+                   {
+                   tickets.map((ticket, index) =>
 
-          </Accordion.Item>
+                     <Accordion.Item key={"ticketaccordion" + index} eventKey={"accordion" + index + ""}>
+                         <Accordion.Header onClick={(event) => {subjectHeaderClicked("ticket-" + ticket.id)}} >
+                         {ticket.subject}
+                         </Accordion.Header>
+                         <Accordion.Body>
+                               <DetailedTicketViewerBody ticketId={ticket.id} activeTicket={activeTicket} />
+
+                         </Accordion.Body>
+
+                     </Accordion.Item>
 
 
 
 
-        )
-        }
-    </Accordion>
+                   )
+                   }
+               </Accordion>
+
+               : <div className="card-jumbotron">
+                   <div className="container">
+                     <h1 className="display-4 color-red"><FontAwesomeIcon icon={faExclamationTriangle} color="red" className={"mr-2"} />No Tickets Available</h1>
+                     <p className="lead">Opps! No tickets available for view. Please hit refresh!</p>
+                   </div>
+                 </div>
+    }
+
     </div>
 
 
