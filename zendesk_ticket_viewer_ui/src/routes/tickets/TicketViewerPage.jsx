@@ -12,6 +12,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export default function TicketViewerPage() {
   const [tickets, setTickets] = useState(null);
+  const [errormessage, setErrorMessage] = useState(null);
   const [meta, setMeta] = useState(null);
   const [pageSize, setPageSize] = useState(25);
   const [activeTicket, setActiveTicket] = useState(null);
@@ -32,13 +33,18 @@ export default function TicketViewerPage() {
     let params = metaPageValue == null ? {"pageSize": pageSize} : {"page": metaPageValue, "pageSize": pageSize, "pageLink": pageLink};
     console.log(params);
     setTickets(null);
+    setErrorMessage(null);
 
     fetch(APIURLS.getTicketsURL + "?" + new URLSearchParams(params).toString())
-    .then(response => response.json())
+    .then(response => {if (response.status == 200) {return response.json()} else {new Error()} })
                   .then(result => {
+
                       setTickets(result.tickets);
                       setMeta(result.meta);
+
                       }).catch((error) => {
+                           setErrorMessage("Fetch API Call failed with an error");
+
                       console.error("Fetch API Call failed with an error" + error);
                       });
 
@@ -61,6 +67,18 @@ export default function TicketViewerPage() {
 
   };
 
+
+    if (errormessage) {
+
+    return(<div className="card-jumbotron">
+                       <div className="container">
+                         <h1 className="display-4 color-red"><FontAwesomeIcon icon={faExclamationTriangle} color="red" className={"mr-2"} />Connection Failed</h1>
+                         <p className="lead">Opps! No tickets available for view. Please hit refresh!</p>
+                         <p className="lead">{errormessage}</p>
+
+                       </div>
+                     </div>);
+    }
 
 
 

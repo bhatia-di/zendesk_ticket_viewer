@@ -31,10 +31,12 @@ Zendesk Ticket Viewer
 4. ![img.png](DetailedViewTickets.JPG)
 5. Detailed Ticket View with full description:
 6. ![img.png](DetailedViewFullDescription.JPG)
-7. Paginate by click left and right arrows and change page size by selecting number of rows in the user interface
+7. Paginate by click left and right arrows and change page size by selecting number of rows in the user interface:
 8. ![img.png](Paginated.JPG)
-9. When there are no tickets to show
+9. When there are no tickets to show:
 10. ![img.png](NoTickets.JPG)
+11. When Zendesk API responds with a 400 or error response:
+12. ![img.png](ConnectionFaliled.JPG)
 
 
 

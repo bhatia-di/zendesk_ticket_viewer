@@ -19,16 +19,15 @@ public class GlobalExceptionHandler {
     protected ResponseEntity handleClientAndServiceException(Throwable exception) {
       log.error("GlobalExceptionHandler::handleConflict", exception);
       if (exception instanceof ClientException) {
-          return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                  .body(exception.getMessage());
+          return new ResponseEntity<>(new ClientException(exception.getMessage()), HttpStatus.BAD_REQUEST);
 
 
       } else if (exception instanceof ServiceException) {
           return new ResponseEntity<>(new ServiceException(exception.getMessage()), HttpStatus.BAD_REQUEST);
       }
 
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .body(exception.getMessage());
+        return new ResponseEntity<>(new ServiceException(exception.getMessage()), HttpStatus.BAD_REQUEST);
+
     }
 
 
@@ -36,7 +35,7 @@ public class GlobalExceptionHandler {
     @RequestMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     protected ResponseEntity handleException(Throwable exception) {
 
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .body(exception.getMessage());
+        return new ResponseEntity<>(new ServiceException(exception.getMessage()), HttpStatus.BAD_REQUEST);
+
     }
 }
