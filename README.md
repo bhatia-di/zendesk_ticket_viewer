@@ -1,10 +1,13 @@
 Zendesk Ticket Viewer
 
+Information:
+1. Server port: 8080
+2. User Interface: http://localhost:8080
+
 Steps to start the application on your local machine
-1. port: 8080
-2. JDK: 17
-3. Node & npm
-4. 
+1. Install Java SDK version 17
+2. Install Node v17.0.1
+3. 
 
 
 Steps performed to understand & implement the requirements
