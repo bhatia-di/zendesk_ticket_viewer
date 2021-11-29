@@ -6,6 +6,7 @@ import com.zendesk.zendesk_ticket_viewer_rest.exception.ServiceException;
 import com.zendesk.zendesk_ticket_viewer_rest.utils.APIEndPoints;
 import com.zendesk.zendesk_ticket_viewer_rest.view.ZendeskDetailedTicketResponse;
 import com.zendesk.zendesk_ticket_viewer_rest.view.ZendeskMultiTicketAPIResponse;
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.tomcat.util.codec.binary.Base64;
@@ -20,11 +21,10 @@ import org.springframework.web.client.RestTemplate;
 
 @Service
 @Slf4j
-@RequiredArgsConstructor
+@AllArgsConstructor
 public class ZendeskRestService {
 
-
-    private final RestTemplate restTemplate = new RestTemplate();
+    private final RestTemplate restTemplate;
     private final ZendeskProperties zendeskProperties;
 
 
@@ -62,6 +62,7 @@ public class ZendeskRestService {
                                 ZendeskMultiTicketAPIResponse.class);
 
             } catch (Exception e) {
+                e.printStackTrace();
                 throw new ClientException("Could not make connection with the Zendesk API");
             }
 

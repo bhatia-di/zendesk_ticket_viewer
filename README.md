@@ -24,7 +24,7 @@ Zendesk Ticket Viewer
 15. Open http://localhost:8080
 
 
-#User Interface Screens
+# Actual User Interface Screens developed in React JavaScript Frame work
 1. View All Ticket Information:
 2. ![img.png](AllTickets.JPG)
 3. Detailed Ticked View with limited words in description:
@@ -38,10 +38,21 @@ Zendesk Ticket Viewer
 11. When Zendesk API responds with a 400 or error response:
 12. ![img.png](ConnectionFaliled.JPG)
 
+# Design Choices made during developing the front-end solution
+1. Hooks based React Generic components created to deliver a streamline look
+2. Webpack used to enable proxy and other build capabilities
+3. bootstrap, react-bootstrap used to develop and beautify components.
+4. Moment used to parse dates
+5. Iconography supported through font-awesome
+6. Users can play with the page size and have a smooth experience with paginating through tickets
 
 
-Steps performed to understand & implement the requirements
-1. Through Postman using Basic Authentication Setup => Executed API https://zcczendeskcodingchallenge3911.zendesk.com/api/v2/imports/tickets/create_many to create sample tickets
-2. Verified through JOB Import API to verify status of the job.
-3. Understood the response of the API : https://zcczendeskcodingchallenge3911.zendesk.com/api/v2/tickets.json?page[size]=8 Experimented with different page sizes.
-4. 
+
+# Design Choices made during developing the back-end solution
+1. Used Spring Boot and Rest template to connect & consume REST API
+2. Basic Authorization technique used to fetch response from zendesk
+3. Configured the username / password and URL in the application.properties
+4. **Jackson** used for serialization and de-serialization.
+5. Filtered out all tickets which have the property **is_public as false** value. This was done to avoid any private tickets being visible in the public view.
+6. Leveraged **@ControllerAdvice** to propagate errors to user interface in a friendly manner
+7. Leveraged **JUnit and Mockito** to test out different Classes.
